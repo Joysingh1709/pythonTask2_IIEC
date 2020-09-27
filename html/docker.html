@@ -1,0 +1,205 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <Style>
+            body{
+                height: 100%;
+                background: #EEEEEE;
+            }
+            .main{
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                height: 100%;
+            }
+            .content{
+                padding: 50px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                width: 50%;
+                height: 100%;
+            }
+            .card{
+                width: 100%;
+            }
+        </Style>
+    </head>
+    <body>
+        <div class="container justify-content-center ">
+
+       <div class="main">
+
+        <div class="content">
+            <img width="100px" height="100px" style="margin-bottom: 20px;" src="./assets/docker.png" alt="">
+            <h2>Select action you want to perform in Docker below.</h2>
+            <br>
+            <select class="form-control" name="os2" id="os2">
+                <option value="menu1">Launch new Pod</option>
+                <option value="menu2">Stop running Pod</option>
+                <option value="menu3">Delete Stoped Container</option>
+                <option value="menu4">View Running Pods</option>
+                <option value="menu5">View All Pods</option>
+                <option value="menu6">Delete All Stoped Pods</option>
+            </select>
+        </div>
+
+        <div class="content">
+                <div class="card m-2" id="menu1" style="display: block;">
+                    <div class="card-header" >
+                        <h5>Launch new Pod</h5>
+                    </div>
+                    <div class="card-body" >
+                        <form action="http://192.168.29.176/cgi-bin/dockerRun.py">
+                            <div class="form-group" >
+                                <label for="osName">Pod Name</label>
+                                <input type="text" placeholder="Pod name " class="form-control" name="osName" id="osName" required>
+                            </div>
+                            <div class="form-group" >
+                                <label for="os">Select OS</label>
+                                <select class="form-control" name="os" id="os">
+                                    <option value="ubuntu:latest">Ubuntu OS</option>
+                                    <option value="centos:latest">Cent OS</option>
+                                    <option value="mysql:5.7">MySQL</option>
+                                    <option value="wordpress:5.1.1-php7.3-apache">Wordpress</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-block btn-primary">LAUNCH POD</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card m-2" id="menu2" style="display: none;">
+                    <div class="card-header" >
+                        <h5>Stop running Pod</h5>
+                    </div>
+                    <div class="card-body" >
+                        <form action="http://192.168.29.176/cgi-bin/dockerStop.py">
+                            <div class="form-group" >
+                                <label for="osNameS">Pod Name</label>
+                                <input type="text" placeholder="Pod name " class="form-control" name="osNameStop" id="osNameS" required>
+                            </div>
+                            <button type="submit" class="btn btn-block btn-warning">STOP POD</button>
+                        </form>
+                    </div>
+                    </div>
+                        <div class="card m-2" id="menu3" style="display: none;">
+                            <div class="card-header" >
+                                <h5>Delete Stoped Container</h5>
+                            </div>
+                            <div class="card-body" >
+                                <form action="http://192.168.29.176/cgi-bin/dockerDelete.py">
+                                    <div class="form-group" >
+                                        <label for="osNameD">Pod Name</label>
+                                        <input type="text" placeholder="Pod name " class="form-control" name="osNameDelete" id="osNameD" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-block btn-danger">DELETE POD</button>
+                                </form>
+                            </div>
+                    </div>
+                    <div class="card m-2" id="menu4" style="display: none;">
+                        <div class="card-header" >
+                            <h5>View Running Pods</h5>
+                        </div>
+                        <div class="card-body" >
+                            <form action="http://192.168.29.176/cgi-bin/dockerView.py">
+                                <button type="submit" class="btn btn-block btn-primary">VIEW PODS</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card m-2" id="menu5" style="display: none;">
+                        <div class="card-header" >
+                            <h5>View All Pods</h5>
+                        </div>
+                        <div class="card-body" >
+                            <form action="http://192.168.29.176/cgi-bin/dockerAll.py">
+                                <button type="submit" class="btn btn-block btn-warning">VIEW ALL PODS</button>
+                            </form>
+                        </div>
+                </div>
+                <div class="card m-2" id="menu6" style="display: none;">
+                    <div class="card-header" >
+                        <h5>Delete All Stoped Pods</h5>
+                    </div>
+                    <div class="card-body" >
+                        <form action="http://192.168.29.176/cgi-bin/dockerAllDelete.py">
+                            <button type="submit" class="btn btn-block btn-danger">DELETE ALL PODS</button>
+                        </form>
+                    </div>
+            </div>
+        </div>
+
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                var menu1 = document.getElementById('menu1');
+                var menu2 = document.getElementById('menu2');
+                var menu3 = document.getElementById('menu3');
+                var menu4 = document.getElementById('menu4');
+                var menu5 = document.getElementById('menu5');
+                var menu6 = document.getElementById('menu6');
+
+                document.getElementById('os2').addEventListener('change', (e) => {
+                    console.log(e.target.value);
+                    if(e.target.value === 'menu1'){
+                        menu1.style.display = 'block'
+                        menu2.style.display = 'none'
+                        menu3.style.display = 'none'
+                        menu4.style.display = 'none'
+                        menu5.style.display = 'none'
+                        menu6.style.display = 'none'
+                    }
+                    else if(e.target.value === 'menu2'){
+                        menu1.style.display = 'none'
+                        menu2.style.display = 'block'
+                        menu3.style.display = 'none'
+                        menu4.style.display = 'none'
+                        menu5.style.display = 'none'
+                        menu6.style.display = 'none'
+                    }
+                    else if(e.target.value === 'menu3'){
+                        menu1.style.display = 'none'
+                        menu2.style.display = 'none'
+                        menu3.style.display = 'block'
+                        menu4.style.display = 'none'
+                        menu5.style.display = 'none'
+                        menu6.style.display = 'none'
+                    }
+                    else if(e.target.value === 'menu4'){
+                        menu1.style.display = 'none'
+                        menu2.style.display = 'none'
+                        menu3.style.display = 'none'
+                        menu4.style.display = 'block'
+                        menu5.style.display = 'none'
+                        menu6.style.display = 'none'
+                    }
+                    else if(e.target.value === 'menu5'){
+                        menu1.style.display = 'none'
+                        menu2.style.display = 'none'
+                        menu3.style.display = 'none'
+                        menu4.style.display = 'none'
+                        menu5.style.display = 'block'
+                        menu6.style.display = 'none'
+                    }
+                    else if(e.target.value === 'menu6'){
+                        menu1.style.display = 'none'
+                        menu2.style.display = 'none'
+                        menu3.style.display = 'none'
+                        menu4.style.display = 'none'
+                        menu5.style.display = 'none'
+                        menu6.style.display = 'block'
+                    }
+                })
+            });
+        </script>
+
+       </div>
+
+
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> 
+    </body>
+</html>
